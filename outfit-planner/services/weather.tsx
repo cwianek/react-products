@@ -1,4 +1,4 @@
-const WEATHER_API_KEY = '05222a3a0ffed4d65a5a01ac85a1deab';
+import { WEATHER_API_KEY } from './keys';
 
 let weather = null;
 
@@ -26,10 +26,10 @@ const fetchCurrentWeather = async ({ lat, lon, exclude, units }) => {
 }
 
 const getWeather = async () => {
-  if(weather !== null){
+  if (weather !== null) {
     return weather;
   }
-  
+
   let weathers = await fetchWeatherInfo();
   weathers = weathers.map((w) => {
     const picked = (({ dt, clouds, humidity, pressure, temp, wind_speed }) => ({ dt, clouds, humidity, pressure, temp, wind_speed }))(w);
