@@ -8,6 +8,8 @@ db = get_db()
 
 outfits_page = Blueprint('outfits_page', __name__)
 
+n_neighbors = 5
+
 @outfits_page.route("/outfit", methods=["POST"])
 def addOutfit():
     req = request.get_json()
@@ -21,14 +23,22 @@ def removeOutfit():
     req = request.get_json()
     id = req['id']
     db.outfits.delete_one({'id': id})
+    db.worns.delete_many({'outfitId': id})
     return toRest(id)
 
 @outfits_page.route("/outfits-by-weather", methods=["POST"])
 def fetchOutfits():
-    #outfits = list(db.outfits.find({}))
+    worns = list(db.worns.find({}))
     req = request.get_json()
     weather = req['weather']
-    predicted = predict(weather)
-    for pred in predicted:
-        pred["worn"] = isWorn(pred["id"])
-    return dumps(predicted)
+    result = []
+
+    if len(worns) > n_neighbors:
+        result = predict(weather)
+    else:
+        result = list(db.outfits.find({}))
+
+    for res in result:
+        res["worn"] = isWorn(res["id"])
+    
+    return dumps(result)

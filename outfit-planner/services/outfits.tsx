@@ -1,7 +1,6 @@
 import api from './config';
 
 function fetchOutfitsByWeather(weather) {
-  console.log("jak kurwa")
   return fetch(`${api.URL}/outfits-by-weather`, {
     method: 'POST',
     headers: api.headers,

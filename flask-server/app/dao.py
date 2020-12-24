@@ -2,8 +2,9 @@ import pymongo
 from bson.json_util import dumps
 from flask import jsonify
 from pymongo import ReturnDocument
+import os
 
-client = pymongo.MongoClient("localhost", 27017)
+client = pymongo.MongoClient(os.getenv('MONGODB_URI', default='mongodb://localhost:27017/'))
 db = client.outfitPlanner
 
 def get_db():

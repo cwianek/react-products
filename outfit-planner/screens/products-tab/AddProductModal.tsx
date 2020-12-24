@@ -48,7 +48,6 @@ export const AddProductModal = () => {
   }
 
   const closeModal = () => {
-    console.log("close modal")
     setUri('');
     dispatch(closeProductModal());
   }
@@ -57,6 +56,7 @@ export const AddProductModal = () => {
     var splitUri = item.uri.split('/')
     let localUri = FileSystem.documentDirectory + splitUri[splitUri.length - 1];
     localUri = 'file:' + localUri.substring(7)
+    FileSystem.copyAsync({from: uri, to: localUri});
     dispatch(addProduct({ category: item.category, localUri }))
   }
 
@@ -93,16 +93,16 @@ export const AddProductModal = () => {
           </View>
 
           <View style={styles.modalButtons}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={{ ...styles.openButtonEmpty }}
               onPress={closeModal}>
               <Text style={styles.textStyleEmpty}>Cancel</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{ ...styles.openButton }}
               onPress={addItem}>
               <Text style={styles.textStyle}>Done</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

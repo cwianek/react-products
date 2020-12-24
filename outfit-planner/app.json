@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "outfitPlanner",
+    "name": "Outfit planner",
     "slug": "outfitPlanner",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,6 +23,10 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+	"android": {
+      "package": "com.adamprojects.outfitPlanner",
+      "versionCode": 1
     }
   }
 }

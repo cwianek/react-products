@@ -13,7 +13,7 @@ export const OpenOutfitModalButton = () => {
   const dispatch = useDispatch()
 
   const openModal = () =>{
-    selected.length ? dispatch(openOutfitModal()) : dispatch(openProductModal)
+    selected.length ? dispatch(openOutfitModal()) : dispatch(openProductModal())
   }
 
   return (

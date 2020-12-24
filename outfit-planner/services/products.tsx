@@ -26,7 +26,7 @@ function addProduct(product) {
 }
 
 function removeProduct(id){
-  return fetch(`${URL}/product`, {
+  return fetch(`${api.URL}/product`, {
     method: 'DELETE',
     headers: api.headers,
     body: JSON.stringify({

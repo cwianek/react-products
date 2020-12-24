@@ -16,6 +16,7 @@ const OPEN_PRODUCT_MODAL = 'products/openProductModal';
 const CLOSE_PRODUCT_MODAL = 'products/closeProductModal';
 const OPEN_OUTFIT_MODAL = 'products/openOutfitModal';
 const CLOSE_OUTFIT_MODAL = 'products/closeOutfitModal';
+const SELECTION_CLEARED = 'products/selectionCleared';
 
 
 
@@ -28,6 +29,7 @@ export default function todosReducer(state = initialState, action) {
       return { ...state, products: state.products.filter((product) => product.id !== action.payload) };
     }
     case PRODUCT_ADDED: {
+      console.log("PRODUCT_ADDED", action.payload, Object.keys(action.payload))
       return { ...state, products: [...state.products, action.payload] }
     }
     case PRODUCT_SELECTED: {
@@ -35,6 +37,9 @@ export default function todosReducer(state = initialState, action) {
     }
     case PRODUCT_DESELECTED: {
       return { ...state, selected: state.selected.filter((selected) => selected !== action.payload) }
+    }
+    case SELECTION_CLEARED: {
+      return { ...state, selected: [] }
     }
     case OPEN_PRODUCT_MODAL: {
       return { ...state, productModalOpen: true }
@@ -61,14 +66,14 @@ export async function fetchProducts(dispatch, getState) {
 }
 
 export function removeProduct(id) {
-  return async function removeOutfitThunk(dispatch, getState) {
+  return async function removeProductThunk(dispatch, getState) {
     const response = await productService.removeProduct(id);
     dispatch({ type: PRODUCT_REMOVED, payload: id })
   }
 }
 
 export function addProduct(product) {
-  return async function removeOutfitThunk(dispatch, getState) {
+  return async function addProductThunk(dispatch, getState) {
     const response = await productService.addProduct(product);
     dispatch({ type: PRODUCT_ADDED, payload: response })
   }
@@ -107,6 +112,12 @@ export const openOutfitModal = () => {
 export const closeOutfitModal = () => {
   return (dispatch) => {
     dispatch({ type: CLOSE_OUTFIT_MODAL })
+  }
+}
+
+export const clearSelected = () => {
+  return (dispatch) => {
+    dispatch({type: SELECTION_CLEARED})
   }
 }
 

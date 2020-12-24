@@ -54,9 +54,9 @@ const fetchWeatherInfo = async () => {
   const day = now.getDate();
 
   let mode = 'today';
-  if (hour > 18) {
-    mode = 'tommorow';
-  }
+  // if (hour > 18) {
+  //   mode = 'tommorow';
+  // }
 
   const weathers = await fetchCurrentWeather(requestData);
   let result = weathers.hourly

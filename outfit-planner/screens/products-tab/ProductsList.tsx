@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import {deselectProduct, removeProduct, selectProduct} from '../../reducers/productSlice';
 import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 
 
 export const ProductsList = () => {
@@ -42,14 +42,14 @@ export const ProductsList = () => {
 
     const columns = item.map((val, idx) => {
       return (
-        <View key={idx} style={[styles.item, selected.includes(val.id) ? styles.selectedItem : null]} key={idx}>
-          <TouchableHighlight
+        <View key={val.id} style={[styles.item, selected.includes(val.id) ? styles.selectedItem : null]}>
+          <TouchableOpacity
             style={[styles.itemRemove, selected.includes(val.id) ? styles.selectedItemRemove : null]}
             onPress={() => {
               deleteOutfit(val.id);
             }}>
             <AntDesign name='close' size={25} style={styles.itemRemoveText}></AntDesign>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} onPress={() => { onSelectProduct(val.id) }}>
             <Image source={{ uri: val.localUri }} style={[styles.itemImage, styles[val.category]]} />
           </TouchableOpacity>

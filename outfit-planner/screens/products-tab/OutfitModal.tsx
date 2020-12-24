@@ -1,11 +1,12 @@
 import React, { Component, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight, Modal, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Modal, ScrollView, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Fontisto } from '@expo/vector-icons';
 import { addProduct, removeProduct, closeProductModal, openProductModal, closeOutfitModal } from '../../reducers/productSlice';
 
 import Colors from '../../constants/Colors';
 import { addOutfit } from '../../reducers/outfitSlice';
+import {clearSelected} from '../../reducers/productSlice';
 
 export const OutfitModal = () => {
   const [rain, setRain] = useState(false);
@@ -30,7 +31,7 @@ export const OutfitModal = () => {
   }
 
   const addToDatabase = () => {
-
+    console.log("keke");
     let data = products.filter((item) => selected.includes(item.id));
     let outfit = {
       shoeUri: getItemUriByCategory(data, 'shoe'),
@@ -43,8 +44,8 @@ export const OutfitModal = () => {
     }
     Object.keys(outfit).forEach((key) => (outfit[key] == null) && delete outfit[key]);
 
-
     dispatch(addOutfit(outfit));
+    dispatch(clearSelected());
     closeModal();
   }
 
@@ -58,7 +59,7 @@ export const OutfitModal = () => {
       animationType="slide"
       transparent={true}
       visible={outfitModalOpen}
-      >
+    >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={styles.modalContent}>
@@ -72,17 +73,18 @@ export const OutfitModal = () => {
           </View>
 
           <View style={styles.modalButtons}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={{ ...styles.openButtonEmpty }}
               onPress={closeModal}>
-              <Text style={styles.textStyleEmpty}>Cancel</Text>
-            </TouchableHighlight>
-
-            <TouchableHighlight
+                <Text style={styles.textStyleEmpty}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{ ...styles.openButton }}
               onPress={addToDatabase}>
-              <Text style={styles.textStyle}>Done</Text>
-            </TouchableHighlight>
+              <View>
+                <Text style={styles.textStyle}>Done</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -120,7 +122,8 @@ const styles = StyleSheet.create({
   openButton: {
     backgroundColor: Colors.pink,
     borderRadius: 20,
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     margin: 10,
     elevation: 2,
   },
@@ -130,9 +133,11 @@ const styles = StyleSheet.create({
     borderColor: Colors.pink,
     color: Colors.pink,
     borderRadius: 20,
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     margin: 10,
     elevation: 2,
+    opacity: 1,
 
   },
   textStyle: {
@@ -172,6 +177,7 @@ const styles = StyleSheet.create({
   modalButtons: {
     justifyContent: 'center',
     flexDirection: 'row',
+    zIndex: 1004
   },
   rainIcon: {
     position: 'relative',

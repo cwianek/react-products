@@ -12,7 +12,7 @@ def addProduct():
     product = req['product']
     product['id'] = getSequenceNextValue("product")
     db.products.insert_one(product).inserted_id
-    return toRest(product)
+    return dumps(product)
 
 @products_page.route("/product", methods=["DELETE"])
 def removeProduct():

@@ -1,17 +1,15 @@
 import React, { Component, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight, Modal, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import Colors from '../../constants/Colors';
 import Layout from '../../constants/Layout';
 
-import OutfitItem from './OutfitPreview';
-
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import OutfitPreview from './OutfitPreview';
 
-export default class OutfitSelection extends Component {
+export default class OutfitItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +20,7 @@ export default class OutfitSelection extends Component {
   _renderItem = ({ item, index }) => {
     return (
       <View style={[styles.slide]} key={index}>
-        <TouchableHighlight
+        <TouchableOpacity
           style={[styles.itemRemove]}
           onPress={() => {
             var len = this.props.entries.length;
@@ -33,9 +31,9 @@ export default class OutfitSelection extends Component {
             this.props.deleteOutfit(item.id);
           }}>
           <AntDesign name='close' size={25} style={styles.itemRemoveText}></AntDesign>
-        </TouchableHighlight>
+        </TouchableOpacity>
         {item.rain && <Fontisto name="rain" style={styles.rainIcon} size={24} />}
-        <OutfitItem outfit={item}></OutfitItem>
+        <OutfitPreview outfit={item}></OutfitPreview>
         <Text style={styles.id}>{item.id}</Text>
       </View>
     );

@@ -17,7 +17,7 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors.pink }}>
+      tabBarOptions={{ activeTintColor: Colors.pink, showLabel: false }}>
       <BottomTab.Screen
         name="TabOne"
         component={TabOneNavigator}
@@ -26,7 +26,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Items"
+        name="TabTwo"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="tag" color={color} />,
@@ -52,7 +52,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="OutfitsTab"
         component={OutfitsTab}
-        options={{ headerTitle: 'Items' }}
+        options={{ headerTitle: 'Outfits' }}
       />
     </TabOneStack.Navigator>
   );
@@ -66,7 +66,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerTitle: 'Items' }}
       />
     </TabTwoStack.Navigator>
   );
