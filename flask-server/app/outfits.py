@@ -15,6 +15,7 @@ def addOutfit():
     req = request.get_json()
     outfit = req['outfit']
     outfit['id'] = getSequenceNextValue("outfit")
+    outfit['email'] = request.environ['email']
     db.outfits.insert_one(outfit).inserted_id
     return dumps(outfit)
 
@@ -28,7 +29,8 @@ def removeOutfit():
 
 @outfits_page.route("/outfits-by-weather", methods=["POST"])
 def fetchOutfits():
-    worns = list(db.worns.find({}))
+    email = request.environ['email']
+    worns = list(db.worns.find({'email': email}))
     req = request.get_json()
     weather = req['weather']
     result = []
@@ -36,7 +38,7 @@ def fetchOutfits():
     if len(worns) > n_neighbors:
         result = predict(weather)
     else:
-        result = list(db.outfits.find({}))
+        result = list(db.outfits.find({'email': email}))
 
     for res in result:
         res["worn"] = isWorn(res["id"])

@@ -18,6 +18,11 @@ export default {
           },
         },
       },
+      Auth: {
+        screens:{
+          AuthScreen: 'auth'
+        }
+      },
       NotFound: '*',
     },
   },

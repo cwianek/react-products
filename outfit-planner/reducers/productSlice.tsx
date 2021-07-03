@@ -61,7 +61,7 @@ export default function todosReducer(state = initialState, action) {
 
 // Thunk function
 export async function fetchProducts(dispatch, getState) {
-  const response = await productService.fetchProducts();
+  const response = await productService.fetchProducts(getState().session.user.token);
   dispatch({ type: PRODUCTS_LOADED, payload: response })
 }
 

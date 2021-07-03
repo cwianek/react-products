@@ -31,6 +31,8 @@ export default {
   white: 'white',
   gray: '#E3447C',
   rasinBlack: rasinBlack,
+  green: '#00f59e',
+  blue: '#0057f5',
   quickSilver,
   nonPhotoBlue,
   lightGray,

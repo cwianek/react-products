@@ -8,6 +8,7 @@ import Navigation from './navigation';
 import { Provider } from 'react-redux';
 import store from './store';
 import NotificationService from './services/notifications';
+import Colors from './constants/Colors';
 
 export default function App(initialProps: any) {
   const isLoadingComplete = useCachedResources();
@@ -24,7 +25,7 @@ export default function App(initialProps: any) {
       <Provider store={store}>
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
-          <StatusBar />
+          <StatusBar backgroundColor={Colors.pink} />
         </SafeAreaProvider>
       </Provider>
     );

@@ -1,9 +1,12 @@
 import api from './config';
 
-function fetchOutfitsByWeather(weather) {
+function fetchOutfitsByWeather(weather, token) {
   return fetch(`${api.URL}/outfits-by-weather`, {
     method: 'POST',
-    headers: api.headers,
+    headers: {
+      ...api.headers,
+      'Authorization': 'Bearer ' + token
+    },
     body: JSON.stringify({
       weather
     })

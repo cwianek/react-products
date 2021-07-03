@@ -2,14 +2,18 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import {Text, Button} from 'react-native'
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import OutfitsTab from '../screens/outfits-tab/OutfitsTab';
 import TabTwoScreen from '../screens/products-tab/ProductsTab';
 import { BottomTabParamList} from '../types';
+import store from '../store';
+import { logoutUser } from '../reducers/sessionSlice';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const state = store.getState();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -48,11 +52,13 @@ const TabOneStack = createStackNavigator();
 
 function TabOneNavigator() {
   return (
-    <TabOneStack.Navigator>
+    <TabOneStack.Navigator 
+    screenOptions={{
+      headerShown: false
+    }}>
       <TabOneStack.Screen
         name="OutfitsTab"
         component={OutfitsTab}
-        options={{ headerTitle: 'Outfits' }}
       />
     </TabOneStack.Navigator>
   );

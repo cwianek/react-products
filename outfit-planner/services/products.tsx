@@ -1,9 +1,12 @@
 import api from './config';
 
-function fetchProducts() {
+function fetchProducts(token) {
   return fetch(`${api.URL}/products`, {
     method: 'GET',
-    headers: api.headers
+    headers: {
+      ...api.headers,
+      'Authorization': 'Bearer ' + token
+    },
   })
     .then((response) => response.json())
     .catch((error) => {

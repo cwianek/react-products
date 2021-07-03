@@ -11,6 +11,7 @@ def addProduct():
     req = request.get_json()
     product = req['product']
     product['id'] = getSequenceNextValue("product")
+    product['email'] = request.environ['email']
     db.products.insert_one(product).inserted_id
     return dumps(product)
 
@@ -23,5 +24,6 @@ def removeProduct():
 
 @products_page.route("/products", methods=["GET"])
 def getProducts():
-    products = list(db.products.find({}))
+    email = request.environ['email']
+    products = list(db.products.find({'email': email}))
     return dumps(products)

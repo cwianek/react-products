@@ -35,7 +35,7 @@ export default function todosReducer(state = initialState, action) {
 }
 
 export async function fetchOutfits(dispatch, getState) {
-  const response = await outfitsService.fetchOutfitsByWeather(getState().weather);
+  const response = await outfitsService.fetchOutfitsByWeather(getState().weather, getState().session.user.token);
   dispatch({ type: OUTFITS_LOADED, payload: response })
 }
 
