@@ -14,3 +14,4 @@ npm-debug.*
 # macOS
 .DS_Store
 **/keys.tsx
+flask-server/share/**/*

@@ -16,7 +16,7 @@ const CATEGORIES =
 
 export const AddProductModal = () => {
   const [category, setCategory] = useState(CATEGORIES[0]);
-  const [uri, setUri] = useState('');
+  const [result, setResult] = useState(null);
   const productModalOpen = useSelector((state) => state.productsState.productModalOpen)
 
   const dispatch = useDispatch()
@@ -31,24 +31,24 @@ export const AddProductModal = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      quality: 0.5,
+      quality: 1,
+      base64:true
     });
 
     if (!result.cancelled) {
-      setUri(result.uri);
+      setResult(result);
+      console.log(result);
     }
   };
 
   const addItem = () => {
-    let item = {
-      category, uri
-    }
-    addToDatabase(item);
+    result.category = category;
+    addToDatabase(result);
     closeModal();
   }
 
   const closeModal = () => {
-    setUri('');
+    setResult(null);
     dispatch(closeProductModal());
   }
 
@@ -56,8 +56,9 @@ export const AddProductModal = () => {
     var splitUri = item.uri.split('/')
     let localUri = FileSystem.documentDirectory + splitUri[splitUri.length - 1];
     localUri = 'file:' + localUri.substring(7)
-    FileSystem.copyAsync({from: uri, to: localUri});
-    dispatch(addProduct({ category: item.category, localUri }))
+    const content = item.base64;
+    FileSystem.writeAsStringAsync(localUri, content, {encoding: FileSystem.EncodingType.Base64});
+    dispatch(addProduct({ category: item.category, localUri, base64: item.base64 })) 
   }
 
   return (
@@ -81,8 +82,8 @@ export const AddProductModal = () => {
             </View>
 
             <Text style={styles.label}>Image</Text>
-            {uri ?
-              <Image source={{ uri }} style={styles.image} />
+            {result && result.uri ?
+              <Image source={ {uri: result.uri} } style={styles.image} />
               :
               <TouchableOpacity
                 style={styles.imageSelection}

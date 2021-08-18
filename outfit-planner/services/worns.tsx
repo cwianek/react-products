@@ -1,9 +1,9 @@
 import api from './config';
 
-function addWorn(worn){
+function addWorn(worn, token){
   return fetch(`${api.URL}/worns`, {
     method: 'POST',
-    headers: api.headers,
+    headers: api.getHeaders(token),
     body: JSON.stringify({
       worn: worn,
     })
@@ -14,10 +14,10 @@ function addWorn(worn){
     });
 }
 
-function removeWorn(worn){
+function removeWorn(worn, token){
   return fetch(`${api.URL}/worns`, {
     method: 'DELETE',
-    headers: api.headers,
+    headers: api.getHeaders(token),
     body: JSON.stringify({
       outfitId: worn.outfitId,
     })

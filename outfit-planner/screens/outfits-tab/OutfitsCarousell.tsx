@@ -59,7 +59,7 @@ export const OutfitsCarousell = () => {
 
     return (
         <View style={styles.container}>
-            <Header
+            {/* <Header
                 leftComponent={{ icon: 'menu', color: 'white' }}
                 centerComponent={{ text: 'Outfit planner', style: { color: 'white', fontSize: 20, fontFamily: 'light' } }}
                 rightComponent={
@@ -72,7 +72,7 @@ export const OutfitsCarousell = () => {
 
                 }
                 containerStyle={{ height: 65, paddingBottom: 10, backgroundColor: Colors.pink, borderBottomWidth: 0 }}
-            />
+            /> */}
             { outfits.length ? <OutfitItem deleteOutfit={deleteOutfit} selectionDone={selectionDone} entries={outfits}></OutfitItem> : null}
             <OutfitNotificationModal></OutfitNotificationModal>
         </View>

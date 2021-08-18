@@ -8,6 +8,7 @@
     "**/node_modules": true,
     "**/package-lock.json": true,
     "**/package.json": true,
-    "**/tsconfig.json": true
+    "**/tsconfig.json": true,
+    "flask-server/share": true
   }
 }

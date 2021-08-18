@@ -32,6 +32,7 @@ export const ProductsList = () => {
   }
 
   const renderItem = (item, index) => {
+    console.log("ITEM", item);
     if (item[0].type == "header") {
       return (
         <View key={index} style={styles.header}>
@@ -67,6 +68,7 @@ export const ProductsList = () => {
     <FlatList
       style={[outfitModalOpen || productModalOpen ? styles.dimmed : null]}
       data={newData}
+      keyExtractor={(item, index) => index.toString()}
       renderItem={({ item, index }) => renderItem(item, index)}
     />
   )

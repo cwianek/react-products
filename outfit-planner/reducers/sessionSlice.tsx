@@ -42,9 +42,11 @@ export const signupUser = (email, password) => {
                 password
             })
         })
-            .then(function (response) {
+        .then((response) => response.json())
 
-                const { token } = response.data;
+            .then(function (response) {
+                
+                const { token } = response;
                 dispatch(sessionSuccess({ email, token }));
                 saveToStorage(email, token);
             })
@@ -57,6 +59,7 @@ export const signupUser = (email, password) => {
 
 export const logoutUser = () => {
     return (dispatch) => {
+        console.log("LOGOUT USER")
         dispatch(sessionLoading())
         dispatch(sessionLogout());
         resetStorage();
@@ -79,8 +82,8 @@ export const loginUser = (email, password) => {
             .then(function (response) {
                 const {token} = response;
                 console.log("save to storage", token)
-                saveToStorage(email, token);
                 dispatch(sessionSuccess({ email, token }));
+                saveToStorage(email, token, dispatch);
             })
             .catch(function (error) {
                 console.log("butut", error);

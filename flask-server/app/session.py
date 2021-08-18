@@ -6,10 +6,11 @@ from app.model.user import User
 import jwt
 from werkzeug.wrappers import Request
 import werkzeug.exceptions as ex
-from cgi import parse_qs, escape
+#from cgi import parse_qs, escape
 from aiohttp import web
 from werkzeug import exceptions
 from werkzeug.wrappers import Response
+from app.email_service import send_email
 
 session_page = Blueprint('session_page', __name__)
 
@@ -24,14 +25,20 @@ def json_response(body='', **kwargs):
 
 
 @session_page.route("/signup", methods=["POST"])
-async def signup():
+def signup():
     req = request.get_json()
     email = req['email']
     password = req['password']
   
     userId = User(email, password).save()
 
-    return toRest(userId)
+    payload = {
+        'email': email,
+    }
+
+    jwt_token = jwt.encode(payload, JWT_SECRET, JWT_ALGORITHM)
+    
+    return dumps({'token': jwt_token})
 
 
 @session_page.route("/login", methods=["POST"])
@@ -48,8 +55,8 @@ def login():
     
     payload = {
         'email': user.email,
-    }
-
+    }   
+    send_email()
     jwt_token = jwt.encode(payload, JWT_SECRET, JWT_ALGORITHM)
 
     return dumps({'token': jwt_token})
@@ -69,6 +76,9 @@ class Middleware:
         request = Request(environ)
 
         if request.path == '/login':
+            return self.app(environ, start_response)
+
+        if request.path == '/signup':
             return self.app(environ, start_response)
 
         request.user = None

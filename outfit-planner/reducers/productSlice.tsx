@@ -1,4 +1,5 @@
 import productService from '../services/products';
+import * as FileSystem from 'expo-file-system';
 
 const initialState = {
   products: [],
@@ -61,20 +62,29 @@ export default function todosReducer(state = initialState, action) {
 
 // Thunk function
 export async function fetchProducts(dispatch, getState) {
-  const response = await productService.fetchProducts(getState().session.user.token);
+  const { token } = getState().session.user;
+  const response = await productService.fetchProducts(token);
+  for (const product of response) {
+    const info = await FileSystem.getInfoAsync(product.localUri)
+    if (!info.exists) {
+      const base64 = await productService.getImageContent(product.id, token)
+      const content = base64;
+      FileSystem.writeAsStringAsync(product.localUri, content, { encoding: FileSystem.EncodingType.Base64 });
+    }
+  }
   dispatch({ type: PRODUCTS_LOADED, payload: response })
 }
 
 export function removeProduct(id) {
   return async function removeProductThunk(dispatch, getState) {
-    const response = await productService.removeProduct(id);
+    const response = await productService.removeProduct(id, getState().session.user.token);
     dispatch({ type: PRODUCT_REMOVED, payload: id })
   }
 }
 
 export function addProduct(product) {
   return async function addProductThunk(dispatch, getState) {
-    const response = await productService.addProduct(product);
+    const response = await productService.addProduct(product, getState().session.user.token);
     dispatch({ type: PRODUCT_ADDED, payload: response })
   }
 }
@@ -117,7 +127,7 @@ export const closeOutfitModal = () => {
 
 export const clearSelected = () => {
   return (dispatch) => {
-    dispatch({type: SELECTION_CLEARED})
+    dispatch({ type: SELECTION_CLEARED })
   }
 }
 

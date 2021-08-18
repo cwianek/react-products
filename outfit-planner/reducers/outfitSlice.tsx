@@ -41,29 +41,30 @@ export async function fetchOutfits(dispatch, getState) {
 
 export function removeOutfit(id) {
   return async function removeOutfitThunk(dispatch, getState) {
-    const response = await outfitsService.removeOutfit(id);
+    const response = await outfitsService.removeOutfit(id, getState().session.user.token);
     dispatch({ type: OUTFIT_REMOVED, payload: id })
   }
 }
 
 export function addOutfit(outfit) {
   return async function removeOutfitThunk(dispatch, getState) {
-    const response = await outfitsService.addOutfit(outfit);
+    const response = await outfitsService.addOutfit(outfit, getState().session.user.token);
     dispatch({ type: OUTFIT_ADDED, payload: response })
   }
 }
 
 export function wearOutfit(outfit) {
   return async function wearOutfitThunk(dispatch, getState) {
+    const { token } = getState().session.user;
     let response = null;
     const worn = {
       outfitId: outfit.id,
       weather: getState().weather
     };
     if (outfit.worn) {
-      response = await wornService.removeWorn(worn)
+      response = await wornService.removeWorn(worn, token)
     } else {
-      response = await wornService.addWorn(worn);
+      response = await wornService.addWorn(worn, token);
     }
     dispatch({ type: TOGGLE_WEAR_OUTFIT, payload: outfit.id })
   }

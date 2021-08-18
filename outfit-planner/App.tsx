@@ -25,7 +25,7 @@ export default function App(initialProps: any) {
       <Provider store={store}>
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
-          <StatusBar backgroundColor={Colors.pink} />
+          <StatusBar backgroundColor={Colors.pink} style='light'/>
         </SafeAreaProvider>
       </Provider>
     );

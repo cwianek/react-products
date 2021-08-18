@@ -13,7 +13,8 @@ export default {
           },
           TabTwo: {
             screens: {
-              TabTwoScreen: 'two',
+              MenuListScreen: 'MenuListScreen',
+              ProductsList: 'ProductsList'
             },
           },
         },
