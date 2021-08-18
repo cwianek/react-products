@@ -13,6 +13,7 @@ def addWorns():
     date = date_time = now.strftime("%m/%d/%Y")
     req = request.get_json()
     worn = req['worn']
+    worn['email'] = request.environ['email']
     worn['id'] = getSequenceNextValue("worn")
     worn['date'] = date
     db.worns.insert_one(worn).inserted_id
@@ -34,3 +35,18 @@ def isWorn(outfitId):
     #worn_id = req['outfitId']
     item = db.worns.find_one({'outfitId': outfitId, 'date': date})
     return True if item != None else False
+
+    
+@worns_page.route("/worns-by-date", methods=["GET"])
+def fetchWornsByDate():
+    email = request.environ['email']
+    worns = list(db.worns.find({'email': email}))
+    
+    result = dict()
+    for worn in worns:
+        date = worn['date']
+        datetimeobject = datetime.strptime(date,'%m/%d/%Y')
+        new_format = datetimeobject.strftime('%Y-%m-%d')
+        result[new_format] = {'weather': worn['weather'], 'outfitId': worn['outfitId']}
+
+    return dumps(result)

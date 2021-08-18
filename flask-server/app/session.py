@@ -56,7 +56,7 @@ def login():
     payload = {
         'email': user.email,
     }   
-    send_email()
+    #send_email()
     jwt_token = jwt.encode(payload, JWT_SECRET, JWT_ALGORITHM)
 
     return dumps({'token': jwt_token})
@@ -80,6 +80,11 @@ class Middleware:
 
         if request.path == '/signup':
             return self.app(environ, start_response)
+
+        if request.path == '/worns-by-date':
+            environ['email'] = 'email'
+            return self.app(environ, start_response)
+
 
         request.user = None
 

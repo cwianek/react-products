@@ -15,7 +15,7 @@ import MenuListScreen from '../screens/products-tab/MenuListScreen';
 import { BottomTabParamList } from '../types';
 import store from '../store';
 import { logoutUser } from '../reducers/sessionSlice';
-import { ProductsList } from '../screens/products-tab/ProductsList';
+import {HistoryScreen} from '../screens/products-tab/HistoryScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const state = store.getState();
@@ -93,6 +93,13 @@ function TabTwoNavigator() {
         component={ProductsTab}
         options={{
           headerTitle: 'Products'
+        }}
+      />
+      <TabTwoStack.Screen
+        name="HistoryScreen"
+        component={HistoryScreen}
+        options={{
+          headerTitle: 'History'
         }}
       />
     </TabTwoStack.Navigator>

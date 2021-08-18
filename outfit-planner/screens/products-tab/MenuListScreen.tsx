@@ -12,7 +12,7 @@ const TEXT_COLOR = Colors.black;
 const SECOND_COLOR = Colors.pink;
 
 
-const CATEGORIES = [{ name: 'Products', icon: 'pricetag', screen: 'ProductsList' }, { name: 'Statistics', icon: 'stats-chart' }]
+const CATEGORIES = [{ name: 'Products', icon: 'pricetag', screen: 'ProductsList' }, { name: 'History', icon: 'calendar', screen:'HistoryScreen' }]
 
 
 export default class MenuListScreen extends React.Component {

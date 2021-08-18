@@ -14,7 +14,8 @@ export default {
           TabTwo: {
             screens: {
               MenuListScreen: 'MenuListScreen',
-              ProductsList: 'ProductsList'
+              ProductsList: 'ProductsList',
+              HistoryScreen: 'HistoryScreen'
             },
           },
         },
