@@ -47,6 +47,8 @@ def fetchWornsByDate():
         date = worn['date']
         datetimeobject = datetime.strptime(date,'%m/%d/%Y')
         new_format = datetimeobject.strftime('%Y-%m-%d')
-        result[new_format] = {'weather': worn['weather'], 'outfitId': worn['outfitId']}
-
+        if new_format not in result:
+            result[new_format] = []
+        result[new_format].append({'weather': worn['weather'], 'outfitId': worn['outfitId']})
+        
     return dumps(result)

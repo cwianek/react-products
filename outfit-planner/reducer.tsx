@@ -5,6 +5,7 @@ import weatherReducer from './reducers/weatherSlice';
 import productReducer from './reducers/productSlice';
 import notificationReducer from './reducers/notificationSlice';
 import sessionReducer from './reducers/sessionSlice';
+import wornReducer from './reducers/wornSlice';
 
 const rootReducer = combineReducers({
   // Define a top-level state field named `todos`, handled by `todosReducer`
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   weather: weatherReducer,
   productsState: productReducer,
   notification: notificationReducer,
-  session: sessionReducer
+  session: sessionReducer,
+  worns: wornReducer
 })
 
 export default rootReducer

@@ -1,49 +1,59 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList, Modal, TouchableOpacity, Picker } from 'react-native';
 import Colors from '../../constants/Colors';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchWornsByDate } from '../../reducers/wornSlice';
+import { useEffect } from 'react';
+import OutfitPreview from '../outfits-tab/OutfitPreview';
 import store from '../../store'
-import { fetchProducts } from '../../reducers/productSlice';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Calendar } from 'react-native-inline-calendar';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 const items = {
-  '2021-08-18':{
-    items: ['a', 'b']
-  }
+  '2021-08-18': [{ outfitId: 9 }],
+  '2021-08-19': [],
 }
 
 export const HistoryScreen = () => {
+  const outfits = useSelector((state) => state.outfits)
+  const wornsByDate = useSelector((state) => state.worns)
+
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  const [data, setData] = useState(null)
 
   const onChange = (event, selectedDate) => {
   };
 
-  const getDate = () => {
-    let tempDate = date.toDateString();
-    return tempDate;
+  useEffect(() => {
+    store.dispatch(fetchWornsByDate);
+  }, [])
+
+  const renderItem = (item, firstItem) => {
+    item.outfit = outfits.find((el) => el.id === item.outfitId);
+    return (
+      <View style={styles.existingDate}>
+        <OutfitPreview outfit={item.outfit}></OutfitPreview>
+      </View>
+    )
   }
 
-  const renderItem = (item) => {
+  const renderEmptyDay = () => {
     return (
-      <View><Text>kek</Text></View>
+      <View style={styles.emptyDate}>
+        <Text style={styles.itemText}>No outfits that day</Text>
+      </View>
     )
   }
 
   return (
     <View style={[styles.container]}>
-     <Calendar
-          items={items}
-          weekStartsOn={1}
-          maxMonthsToScroll={1}
-          minMonthsToScroll={12}
-          weekMode
-          selectedDate={new Date()}
-          scrollable
-          disableWeekToggle
-          itemRenderer={renderItem}
-        />
+      {wornsByDate && <Agenda
+        items={wornsByDate}
+        selected={new Date()}
+        renderItem={renderItem}
+        renderEmptyDate={renderEmptyDay}
+      />}
     </View>
   );
 }
@@ -59,4 +69,19 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     padding: 10,
   },
+  emptyDate: {
+    flex: 1,
+    height: 100,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  existingDate: {
+    backgroundColor: 'white',
+    height: 325,
+    position: 'relative'
+  },
+  itemText: {
+    fontSize: 16,
+  }
 });

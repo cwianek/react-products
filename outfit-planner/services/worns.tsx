@@ -28,7 +28,21 @@ function removeWorn(worn, token){
     });
 }
 
+function getWornsByDate(token){
+  return fetch(`${api.URL}/worns-by-date`, {
+    method: 'GET',
+    headers: api.getHeaders(token)
+  })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+
+
 export default{
   addWorn,
-  removeWorn
+  removeWorn,
+  getWornsByDate
 }

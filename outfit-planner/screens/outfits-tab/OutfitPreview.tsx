@@ -76,9 +76,7 @@ const styles = StyleSheet.create({
   },
   trouser: {
     paddingTop: 20,
-    alignItems: 'center',
-    position: 'relative',
-    right: 60
+    left: 30,
   },
   hoodie: {
     position: 'relative',
