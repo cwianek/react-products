@@ -81,11 +81,6 @@ class Middleware:
         if request.path == '/signup':
             return self.app(environ, start_response)
 
-        if request.path == '/worns-by-date':
-            environ['email'] = 'email'
-            return self.app(environ, start_response)
-
-
         request.user = None
 
         jwt_token = request.headers.get('Authorization', None)

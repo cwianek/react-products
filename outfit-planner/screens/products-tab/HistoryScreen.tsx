@@ -6,7 +6,7 @@ import { fetchWornsByDate } from '../../reducers/wornSlice';
 import { useEffect } from 'react';
 import OutfitPreview from '../outfits-tab/OutfitPreview';
 import store from '../../store'
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 const items = {
   '2021-08-18': [{ outfitId: 9 }],
@@ -17,24 +17,32 @@ export const HistoryScreen = () => {
   const outfits = useSelector((state) => state.outfits)
   const wornsByDate = useSelector((state) => state.worns)
 
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-  const [data, setData] = useState(null)
-
-  const onChange = (event, selectedDate) => {
-  };
-
   useEffect(() => {
     store.dispatch(fetchWornsByDate);
   }, [])
 
   const renderItem = (item, firstItem) => {
     item.outfit = outfits.find((el) => el.id === item.outfitId);
+    console.log(item)
     return (
       <View style={styles.existingDate}>
-        <OutfitPreview outfit={item.outfit}></OutfitPreview>
-      </View>
+        <View style={styles.outfitPreview}>
+          <OutfitPreview
+            outfit={item.outfit}>
+          </OutfitPreview>
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.weatherIcon}
+            source={{
+              uri: `https://openweathermap.org/img/wn/${item.weather.weatherPreview.icon}@2x.png`
+            }}>
+          </Image>
+          <Text style={styles.tempText}>
+            {item.weather.temp} °C
+          </Text>
+        </View>
+      </View >
     )
   }
 
@@ -72,16 +80,39 @@ const styles = StyleSheet.create({
   emptyDate: {
     flex: 1,
     height: 100,
-    backgroundColor: 'white',
+    width: 100,
+    backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
   },
   existingDate: {
     backgroundColor: 'white',
-    height: 325,
-    position: 'relative'
+    height: 300,
+    position: 'relative',
+    flex: 1,
+    flexDirection: 'row',
   },
   itemText: {
-    fontSize: 16,
+    color: 'blue',
+    fontSize: 36,
+  },
+  weatherIcon: {
+    width: 75,
+    height: 75,
+  },
+  outfitPreview: {
+    flex: 1,
+    width: 100,
+    right: 15,
+    transform: [{scaleX: 0.9}, {scaleY: 0.9}]
+  },
+  imageContainer: {
+    paddingRight: 15,
+    flex: 0.3,
+    alignItems: 'center',
+  },
+  tempText:{
+    top: -15,
+    color: Colors.rasinBlack
   }
 });

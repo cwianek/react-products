@@ -6,6 +6,7 @@ import productReducer from './reducers/productSlice';
 import notificationReducer from './reducers/notificationSlice';
 import sessionReducer from './reducers/sessionSlice';
 import wornReducer from './reducers/wornSlice';
+import predictionReducer from './reducers/predictionSlice';
 
 const rootReducer = combineReducers({
   // Define a top-level state field named `todos`, handled by `todosReducer`
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   productsState: productReducer,
   notification: notificationReducer,
   session: sessionReducer,
-  worns: wornReducer
+  worns: wornReducer,
+  prediction: predictionReducer
 })
 
 export default rootReducer

@@ -33,6 +33,9 @@ const getWeather = async () => {
   let weathers = await fetchWeatherInfo();
   weathers = weathers.map((w) => {
     const picked = (({ dt, clouds, humidity, pressure, temp, wind_speed }) => ({ dt, clouds, humidity, pressure, temp, wind_speed }))(w);
+    if(w.weather && w.weather.length){
+      picked.weatherPreview = w.weather[0]
+    }
     return picked;
   })
   weather = weathers[0];
@@ -67,7 +70,7 @@ const fetchWeatherInfo = async () => {
         if (time.getDate() === day && hoursForPrediction.includes(time.getHours())) {
           return true;
         }
-      } else { //TODO: to gówno nie zadziała
+      } else { //TODO: nie zadziała
         if (time.getDate() === day + 1 && hoursForPrediction.includes(time.getHours())) {
           return true;
         }

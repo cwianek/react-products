@@ -15,7 +15,8 @@ export default {
             screens: {
               MenuListScreen: 'MenuListScreen',
               ProductsList: 'ProductsList',
-              HistoryScreen: 'HistoryScreen'
+              HistoryScreen: 'HistoryScreen',
+              PredictionScreen: 'PredictionScreen'
             },
           },
         },

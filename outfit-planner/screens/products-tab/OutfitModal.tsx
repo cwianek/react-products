@@ -31,7 +31,6 @@ export const OutfitModal = () => {
   }
 
   const addToDatabase = () => {
-    console.log("keke");
     let data = products.filter((item) => selected.includes(item.id));
     let outfit = {
       shoeUri: getItemUriByCategory(data, 'shoe'),

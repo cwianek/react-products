@@ -8,7 +8,7 @@ db = get_db()
 
 outfits_page = Blueprint('outfits_page', __name__)
 
-n_neighbors = 5
+n_neighbors = 3
 
 @outfits_page.route("/outfit", methods=["POST"])
 def addOutfit():
@@ -42,5 +42,5 @@ def fetchOutfits():
 
     for res in result:
         res["worn"] = isWorn(res["id"])
-    
+
     return dumps(result)

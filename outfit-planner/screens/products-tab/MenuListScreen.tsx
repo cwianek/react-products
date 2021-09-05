@@ -12,7 +12,11 @@ const TEXT_COLOR = Colors.black;
 const SECOND_COLOR = Colors.pink;
 
 
-const CATEGORIES = [{ name: 'Products', icon: 'pricetag', screen: 'ProductsList' }, { name: 'History', icon: 'calendar', screen:'HistoryScreen' }]
+const CATEGORIES = [
+    { name: 'Products', icon: 'pricetag', screen: 'ProductsList' },
+    { name: 'History', icon: 'calendar', screen: 'HistoryScreen' },
+    { name: 'Outfit prediction', icon: 'color-wand', screen: 'PredictionScreen' }
+]
 
 
 export default class MenuListScreen extends React.Component {
@@ -52,12 +56,14 @@ const styles = {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        padding: 25,
+        paddingVertical: 15,
+        paddingHorizontal: 25,
     },
     item: {
         alignItems: 'center',
         padding: 0,
         margin: 0,
+        marginTop: 15,
         borderWidth: 0,
         borderRadius: 10,
         width: SCREEN_WIDTH / 2 - 30,
@@ -79,14 +85,16 @@ const styles = {
     wrapper: {
         alignItems: 'center',
         flex: 1
-    }, recipeTitle: {
+    },
+    recipeTitle: {
         paddingTop: 25,
-        marginLeft: 2,
         color: TEXT_COLOR,
         fontSize: 14,
         fontWeight: 'bold',
-        fontFamily: 'light'
-    }, recipeDescription: {
+        fontFamily: 'light',
+        textAlign: 'center',
+    },
+    recipeDescription: {
         marginLeft: 2,
         color: TEXT_COLOR,
         fontSize: 13,

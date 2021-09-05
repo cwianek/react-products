@@ -42,7 +42,6 @@ export default class OutfitPreview extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 5,
   },
   image: {
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
     margin: 5
   },
   tops: {
-    position: 'relative',
     flexDirection: 'row'
   },
   jacket: {
@@ -64,13 +62,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   shoe: {
-    position: 'relative',
     alignItems: 'flex-end',
     bottom: 85,
     left: 85
   },
   socks: {
-    position: 'relative',
     bottom: 155,
     right: 30,
   },
@@ -79,17 +75,14 @@ const styles = StyleSheet.create({
     left: 30,
   },
   hoodie: {
-    position: 'relative',
     right: 10,
     top: 20,
   },
   thsirt: {
-    position: 'relative',
     right: 20,
     top: 40,
   },
   noJacket: {
-    position: 'relative',
     left: 35,
     top: -5
   },
@@ -101,7 +94,6 @@ const styles = StyleSheet.create({
     top: -20,
   },
   noHoodieJacket: {
-    position: 'relative',
     top: 15,
     left: 15
   },
