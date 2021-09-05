@@ -23,6 +23,14 @@ export const PredictionScreen = () => {
     store.dispatch(fetchPrediction(weahter))
   }
 
+  const onIncrease = () => {
+    setTemp(temp + 1)
+  }
+
+  const onDecrease = () => {
+    setTemp(temp - 1)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -37,6 +45,8 @@ export const PredictionScreen = () => {
             value={temp}
             color={Colors.pink}
             skin={'clean'}
+            onIncrease={onIncrease}
+            onDecrease={onDecrease}
             append={<Text>°C</Text>}
           />
         </View>
