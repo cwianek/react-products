@@ -10,15 +10,22 @@ import OutfitPreview from '../outfits-tab/OutfitPreview';
 
 export const PredictionScreen = () => {
   const prediction = useSelector((state) => state.prediction)
-  const [temp, setTemp] = useState(15);
+  const weather = useSelector((state) => state.weather)
+
+  const [temp, setTemp] = useState(weather.temp);
+  const [humidity, setHumidity] = useState(weather.humidity);
+  const [pressure, setPressure] = useState(weather.pressure);
+  const [wind_speed, setWindSpeed] = useState(weather.wind_speed);
+  const [clouds, setClouds] = useState(weather.clouds);
+
 
   const predict = () => {
     const weahter = {
       temp: temp,
-      humidity: 50,
-      pressure: 1011,
-      wind_speed: 6,
-      clouds: 75
+      humidity: humidity,
+      pressure: pressure,
+      wind_speed: wind_speed,
+      clouds: clouds
     }
     store.dispatch(fetchPrediction(weahter))
   }
@@ -31,6 +38,58 @@ export const PredictionScreen = () => {
     setTemp(temp - 1)
   }
 
+  const onChange = (num) => {
+    setTemp(num)
+  }
+
+  const onIncreaseClouds = () => {
+    setClouds(clouds + 1)
+  }
+
+  const onDecreaseClouds = () => {
+    setClouds(clouds - 1)
+  }
+
+  const onCloudsChange = (num) => {
+    setClouds(num)
+  }
+
+  const onIncreasePressure = () => {
+    setPressure(pressure + 1)
+  }
+
+  const onDecreasePressure = () => {
+    setPressure(pressure - 1)
+  }
+
+  const onPressureChange = (num) => {
+    setPressure(num)
+  }
+
+  const onIncreaseWindSpeed = () => {
+    setWindSpeed(wind_speed + 1)
+  }
+
+  const onDecreaseWindSpeed = () => {
+    setWindSpeed(wind_speed - 1)
+  }
+
+  const onWindSpeedChange = (num) => {
+    setWindSpeed(num)
+  }
+
+  const onIncreaseHumidity = () => {
+    setHumidity(humidity + 1)
+  }
+
+  const onDecreaseHumidity = () => {
+    setHumidity(humidity - 1)
+  }
+
+  const onHumidityChange = (num) => {
+    setHumidity(num)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -41,20 +100,101 @@ export const PredictionScreen = () => {
           <InputSpinner
             max={40}
             min={-20}
-            step={1}
             value={temp}
             color={Colors.pink}
             skin={'clean'}
+            height={35}
             onIncrease={onIncrease}
             onDecrease={onDecrease}
+            onChange={onChange}
             append={<Text>°C</Text>}
+          />
+        </View>
+      </View>
+
+      <View style={styles.input}>
+        <View style={styles.label}>
+          <Text style={styles.labelText}>Clouds</Text>
+        </View>
+        <View style={styles.inputSpinner}>
+          <InputSpinner
+            max={100}
+            min={0}
+            value={clouds}
+            color={Colors.pink}
+            onIncrease={onIncreaseClouds}
+            onDecrease={onDecreaseClouds}
+            onChange={onCloudsChange}
+            skin={'clean'}
+            height={35}
+            append={<Text>%</Text>}
+          />
+        </View>
+      </View>
+
+      <View style={styles.input}>
+        <View style={styles.label}>
+          <Text style={styles.labelText}>Humidity</Text>
+        </View>
+        <View style={styles.inputSpinner}>
+          <InputSpinner
+            max={100}
+            min={0}
+            value={humidity}
+            color={Colors.pink}
+            skin={'clean'}
+            height={35}
+            onIncrease={onIncreaseHumidity}
+            onDecrease={onDecreaseHumidity}
+            onChange={onHumidityChange}
+            append={<Text>%</Text>}
+          />
+        </View>
+      </View>
+
+      <View style={styles.input}>
+        <View style={styles.label}>
+          <Text style={styles.labelText}>Pressure</Text>
+        </View>
+        <View style={styles.inputSpinner}>
+          <InputSpinner
+            max={1200}
+            min={800}
+            value={pressure}
+            color={Colors.pink}
+            skin={'clean'}
+            height={35}
+            onIncrease={onIncreasePressure}
+            onDecrease={onDecreasePressure}
+            onChange={onPressureChange}
+            append={<Text>hPa</Text>}
+          />
+        </View>
+      </View>
+
+      <View style={styles.input}>
+        <View style={styles.label}>
+          <Text style={styles.labelText}>Wind speed</Text>
+        </View>
+        <View style={styles.inputSpinner}>
+          <InputSpinner
+            max={50}
+            min={0}
+            value={wind_speed}
+            color={Colors.pink}
+            skin={'clean'}
+            height={35}
+            onIncrease={onIncreaseWindSpeed}
+            onDecrease={onDecreaseWindSpeed}
+            onChange={onWindSpeedChange}
+            append={<Text>m/s</Text>}
           />
         </View>
       </View>
 
 
       {prediction.length ?
-        <View>
+        <View style={styles.outfitPrevies}>
           <OutfitPreview outfit={prediction[prediction.length - 1]} />
         </View>
         : null
@@ -77,15 +217,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    position: 'relative',
-    display: 'flex',
-    flex: 1,
+    paddingBottom: 15,
   },
   inputSpinner: {
     position: 'absolute',
     right: 15,
     top: 15,
-    width: 150,
+    width: 125,
     flex: 0.5,
   },
   label: {
@@ -94,10 +232,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   labelText: {
+    position: 'relative',
+    top: -7,
     fontSize: 18,
   },
   buttons: {
-    paddingBottom: 75,
+    position: 'absolute',
+    bottom: 25,
     width: SCREEN_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
@@ -113,6 +254,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.white
   },
+  outfitPrevies: {
+    position: 'relative',
+    top: 15,
+    left: 45,
+    paddingBottom: 0,
+  }
 
 
 })

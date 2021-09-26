@@ -1,5 +1,5 @@
 // const URL = 'https://outfitplannerapp.herokuapp.com/';
-const URL = 'http://192.168.18.10:2006';
+const URL = 'http://192.168.18.15:2006';
 const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json'

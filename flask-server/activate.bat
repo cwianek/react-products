@@ -1,1 +1,0 @@
-cmd /k .\op\Scripts\activate & runserver.py
