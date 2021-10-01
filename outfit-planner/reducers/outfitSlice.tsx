@@ -18,7 +18,6 @@ export default function todosReducer(state = initialState, action) {
       return state.filter((outfit) => outfit.id !== action.payload);
     }
     case OUTFIT_ADDED: {
-      console.log("OUTFIT_ADDDDDED", Object.keys(action.payload))
       return [action.payload, ...state];
     }
     case TOGGLE_WEAR_OUTFIT: {

@@ -42,6 +42,7 @@
     "react-native-calendars": "^1.1264.0",
     "react-native-elements": "^3.4.1",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-inline-calendar": "^0.4.6",
     "react-native-input-spinner": "^1.7.5",
     "react-native-safe-area-context": "3.1.9",
